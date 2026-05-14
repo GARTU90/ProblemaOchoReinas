@@ -4,7 +4,7 @@
 #ifndef MYVAR_H
 #define MYVAR_H
 
-#define MAX_N 512
+#define MAX_N 1024
 
 typedef struct {
     int x[MAX_N];   // coordenadas x de todas las reinas
