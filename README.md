@@ -1,23 +1,33 @@
-# ProblemaOchoReinas
+# Problema de las Ocho Reinas
+El **problema de las ocho reinas** consiste en colocar ocho reinas en un tablero de ajedrez de $8 \times 8$ de tal manera que ninguna de ellas pueda atacar a otra.
 
-El problema de las ocho reinas consiste en poner ocho reinas en un tablero de ajedrez que es de $8x8$.
+## Descripción del Algoritmo
 
-Consiste en generar tablero con 8 reinas aleatorio y se usa el algoritmo de simulated annealing para generar un vecino y de decidir si explorar esa nueva solucion.
+Para resolverlo, el sistema genera un tablero inicial con 8 reinas posicionadas de forma aleatoria. Posteriormente, se utiliza el algoritmo de **Recocido Simulado (*Simulated Annealing*)** para generar soluciones vecinas y decidir si se explora o no cada nueva configuración en función de la probabilidad de aceptación.
 
-La parte a paralelizar es la funcion objetivo que consiste en revisar las diagonales de cada reina en el tablero y revisar si se encuentra en el tablero.
+### Paralelización
+La sección optimizada mediante paralelización es la **función objetivo**. Esta se encarga de revisar exhaustivamente las diagonales y filas de cada reina en el tablero para contabilizar los conflictos existentes.
 
-Ejemplo 8x8:
+> **Ejemplo de un tablero $8 \times 8$:**
+>
+> <img width="408" height="413" alt="Figura 1: Tablero de 8x8" src="https://github.com/user-attachments/assets/d213a8be-a9d8-4626-9466-191d3cd9748c" />
 
-<img width="408" height="413" alt="figura 1" src="https://github.com/user-attachments/assets/d213a8be-a9d8-4626-9466-191d3cd9748c" />
+---
 
+## Escalabilidad y Pruebas en Clúster
 
-Para poder probar la eficiencia de el cluster se deicio tomar un problema con $50$ reinas en un tablero de $50 x 50$
-en el cluster se utilizaron 8 nodos, un maestro y 7 esclavos.
-Se corrio el algoritmo 10 veces por grupo de nodos, es decir, 10 veces con 8 nodo, 10 con 7 nodos, y asi sucesivamente.
-Tambien se agregaron las barras de error usando la desviacione satndar como criterio. el resultado fue el siguiente:
+Este problema es fácilmente escalable en dimensión bidimensional: si el número de reinas ($N$) aumenta, el tamaño del tablero crece proporcionalmente a $N \times N$. 
 
-<img width="889" height="490" alt="Grafico_nodos_vs_tiempo" src="https://github.com/user-attachments/assets/77f58f73-3ebf-4131-b70a-a2e65603a76f" />
+Para evaluar la eficiencia y el rendimiento del clúster, se escaló el problema a **$50$ reinas en un tablero de $50 \times 50$**.
 
-hay un claro descenco en los tiempos de procesamiento entre mas nodos se utilzian como es lo esperado.
+### Configuración del Experimento
+* **Infraestructura:** Se utilizó un clúster de 8 nodos (1 maestro y 7 esclavos).
+* **Metodología:** El algoritmo se ejecutó 10 veces por cada configuración de nodos (es decir, 10 iteraciones con 8 nodos, 10 iteraciones con 7 nodos, y así sucesivamente).
+* **Visualización:** Los gráficos incluyen barras de error calculadas a partir de la desviación estándar de los tiempos de ejecución.
 
+### Resultados
+
+<img width="889" height="490" alt="Gráfico de Nodos vs Tiempo" src="https://github.com/user-attachments/assets/77f58f73-3ebf-4131-b70a-a2e65603a76f" />
+
+Se observa un claro descenso en los tiempos de procesamiento a medida que se incorporan más nodos al clúster. Sin embargo, al alcanzar los **6 nodos**, la mejora en el rendimiento deja de ser significativa para este tamaño de problema ($50$ reinas), estabilizando la curva de tiempo de ejecución.
 
