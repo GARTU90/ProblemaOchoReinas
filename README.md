@@ -1,6 +1,12 @@
 # Problema de las Ocho Reinas
 El **problema de las ocho reinas** consiste en colocar ocho reinas en un tablero de ajedrez de $8 \times 8$ de tal manera que ninguna de ellas pueda atacar a otra.
 
+## Autor
+
+Juan Daniel Rangel Avila
+
+jdrangelavila@gmail.com
+
 ## Descripción del Algoritmo
 
 Para resolverlo, el sistema genera un tablero inicial con 8 reinas posicionadas de forma aleatoria. Posteriormente, se utiliza el algoritmo de **Recocido Simulado (*Simulated Annealing*)** para generar soluciones vecinas y decidir si se explora o no cada nueva configuración en función de la probabilidad de aceptación.
